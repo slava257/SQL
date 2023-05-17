@@ -1,0 +1,95 @@
+//Доведите количество записей в таблице до 5.
+
+skypro=# INSERT INTO employee(
+skypro(# first_name, last_name, gender, age)
+skypro-# VALUES('Anna', 'Oganesyan','girl', 55);
+INSERT 0 1
+skypro=# INSERT INTO employee(
+skypro(# first_name, last_name, gender, age)
+skypro-# VALUES('alexander', 'Mehryakov', 'man', 45);
+INSERT 0 1
+skypro=# INSERT INTO employee(
+skypro(# first_name, last_name, gender, age)
+skypro-# VALUES('Kirill', 'Ivanov', 'man', 65);
+INSERT 0 1
+
+
+
+//Получите информацию об именах и фамилиях по всем сотрудникам. Колонки должны называться «Имя» и «Фамилия».
+
+skypro=# SELECT first_name AS ИМЯ,
+skypro-# last_name AS Фамилия
+skypro-# FROM employee
+skypro-# GROUP BY ИМЯ, Фамилия;
+
+
+
+//Получите всю информацию о сотрудниках, которые младше 30 или старше 50 лет.
+
+skypro=# SELECT * FROM employee
+skypro-# WHERE age < 30 OR age > 50;
+
+
+
+//Получите всю информацию о сотрудниках, которым от 30 до 50 лет.
+
+skypro=# SELECT * FROM employee
+skypro-# WHERE age
+skypro-# BETWEEN 30 AND 50;
+
+
+
+//Выведите полный список сотрудников, которые отсортированы по фамилиям в обратном порядке.
+
+skypro=# SELECT * FROM employee
+skypro-# ORDER BY last_name DESC;
+
+
+
+//Выведите сотрудников, имена которых длиннее 4 символов.
+
+skypro=# SELECT * FROM employee
+skypro-# WHERE first_name LIKE '%____%';
+
+
+
+Измените имена у двух сотрудников так, чтобы на 5 сотрудников было только 3 разных имени,
+то есть чтобы получились две пары тезок и один сотрудник с уникальным именем.
+
+skypro=# UPDATE employee SET first_name = 'Slava' WHERE id = 5;
+UPDATE 1
+skypro=# UPDATE employee SET first_name = 'Rita' WHERE id = 4;
+UPDATE 1
+
+
+
+Посчитайте суммарный возраст для каждого имени. Выведите в двух столбцах «имя» и «суммарный возраст».
+
+skypro=# SELECT first_name AS Имя,
+skypro-# SUM(age) AS Суммарный_возраст
+skypro-# FROM employee
+skypro-# GROUP BY Имя;
+
+
+Выведите имя и самый юный возраст, соответствующий имени.
+
+skypro=# SELECT first_name, age
+skypro-# FROM employee
+skypro-# WHERE age=(
+skypro(# SELECT MIN (age)
+skypro(# FROM employee
+skypro(# );
+
+
+
+
+Выведите имя и максимальный возраст только для неуникальных имен.
+Результат отсортируйте по возрасту в порядке возрастания.
+
+skypro=# SELECT first_name,
+skypro-# MAX (age)
+skypro-# FROM employee
+skypro-# GROUP BY first_name
+skypro-# HAVING count (*) > 1
+skypro-# ORDER BY MAX (age);
+
